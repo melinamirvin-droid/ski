@@ -523,7 +523,7 @@
       <div class="name-eyebrow">Research Tool · Trail Assessment</div>
       <div class="name-headline">Ski<br>Perception<br>Index</div>
       <div class="name-body">
-        You'll be acting as a trail assessor — rating runs based on what you experience on the mountain so scores can be validated against other assessors on the same trails. Enter your name so we can attribute your contributions.
+        You'll be acting as a trail assessor — rating runs based on what you experience on the mountain. Your scores will be weighted against spatially modelled terrain data and compared against other assessors on the same trails to validate and refine the index. Enter your name so we can attribute your contributions.
       </div>
       <input type="text" class="text-input" id="input-name" placeholder="Your name or nickname" />
       <button class="btn btn-primary" id="btn-name-next" disabled>Begin Assessment</button>
@@ -604,8 +604,8 @@
       <div class="model-reveal">
         <div class="model-num" id="model-score-val">—</div>
         <div class="model-text">
-          <strong>Current index score — <span id="model-trail-name"></span></strong>
-          Derived from spatial terrain analysis. Does this match what you experienced today?
+          <strong>Spatially modelled score — <span id="model-trail-name"></span></strong>
+          Derived from terrain analysis including slope gradient, visual exposure, canopy containment, and trail length. Does this match what you experienced today?
         </div>
       </div>
     </div>
@@ -614,7 +614,7 @@
       <div class="rating-question">
         You just skied <strong id="rating-trail-name"></strong>. Based on your experience, what score from <strong>1.0 to 10.0</strong> would you assign this trail in a standardised index — where <strong>1.0</strong> is a completely flat beginner conveyor and <strong>10.0</strong> is the most extreme terrain on the mountain.
         <br><br>
-        <em>This score will be compared against ratings from other assessors on the same trail.</em>
+        <em>Your score will be weighted against the spatial model above and compared against other assessors on this trail. Disagreement is valuable — if the model is wrong, your experience tells us why.</em>
       </div>
       <input type="number" class="decimal-input" id="input-rating"
              min="1" max="10" step="0.1" value="5.0" />
@@ -627,7 +627,7 @@
     <div id="accuracy-block" style="display:none">
       <div class="rating-card">
         <div class="rating-question">
-          The index assigned this trail <strong id="acc-model-val"></strong>. How accurate is that score based on what you experienced today?
+          The spatial model assigned this trail <strong id="acc-model-val"></strong>. How accurate is that score based on what you experienced today? If it feels wrong, rate accordingly — your correction directly improves the model.
         </div>
         <input type="number" class="decimal-input" id="input-accuracy"
                min="1" max="10" step="0.1" value="5.0" />
@@ -796,7 +796,7 @@ const CHIPS = {
             "Visibility","Trail Width","Crowd Pressure","Terrain Variability","Icy Patches","Wind"]
 };
 
-const MODEL_SCORES = {};
+const MODEL_SCORES = {}; // Format: {"Resort||TrailName": 6.2}
 
 let state = {
   name:"", deviceId:getDeviceId(), resort:null, trail:null,
@@ -863,18 +863,16 @@ function buildTrailList(filter="") {
 
 function setupRatingScreen() {
   document.getElementById("rating-trail-name").textContent=state.trail;
-  state.showModel=Math.random()<0.5;
+  state.showModel = true; // show to everyone
   const key=state.resort+"||"+state.trail;
-  const score=MODEL_SCORES[key]||null;
+  const score = MODEL_SCORES[key] !== undefined ? MODEL_SCORES[key] : 0;
   const mw=document.getElementById("model-score-wrap");
   const ab=document.getElementById("accuracy-block");
-  if(state.showModel&&score!==null){
-    mw.style.display="flex";
-    document.getElementById("model-score-val").textContent=score.toFixed(1);
-    document.getElementById("model-trail-name").textContent=state.trail;
-    document.getElementById("acc-model-val").textContent=score.toFixed(1);
-    ab.style.display="block";
-  } else { mw.style.display="none"; ab.style.display="none"; }
+  mw.style.display="flex";
+  document.getElementById("model-score-val").textContent = score === 0 ? "—" : score.toFixed(1);
+  document.getElementById("model-trail-name").textContent=state.trail;
+  document.getElementById("acc-model-val").textContent = score === 0 ? "not yet modelled" : score.toFixed(1);
+  ab.style.display = score === 0 ? "none" : "block";
   document.getElementById("input-rating").value="5.0";
   document.getElementById("input-accuracy").value="5.0";
   document.getElementById("notes").value="";
@@ -892,8 +890,8 @@ async function submitRating() {
     resort:state.resort, trail:state.trail,
     conditions:state.conditions, factors:state.factors,
     trail_score:Math.min(10,Math.max(1,rv)),
-    accuracy_score:state.showModel?Math.min(10,Math.max(1,av)):null,
-    model_shown:state.showModel,
+    accuracy_score:av?Math.min(10,Math.max(1,av)):null,
+    model_shown:true,
     notes:document.getElementById("notes").value,
     timestamp:new Date().toISOString()
   };
