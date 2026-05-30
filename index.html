@@ -5,482 +5,532 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ski Perception Index</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Neue+Haas+Grotesk+Display+Pro:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg:         #f4f2ee;
-      --surface:    #ffffff;
-      --surface2:   #ede9e3;
-      --border:     #d8d3cb;
-      --accent:     #2d5a3d;
-      --accent2:    #4a8c60;
-      --text:       #1a1a18;
-      --text-muted: #7a7568;
-      --red:        #c0392b;
-      --tag-green:  #e8f5ec;
-      --tag-blue:   #e8f0f5;
-      --tag-black:  #e8e8e8;
+      --white:   #ffffff;
+      --off:     #f7f7f7;
+      --light:   #eeeeee;
+      --mid:     #999999;
+      --dark:    #333333;
+      --black:   #0a0a0a;
+      --red:     #cc2200;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      font-family: 'Barlow', sans-serif;
       font-weight: 300;
       min-height: 100vh;
       padding-bottom: 80px;
     }
 
+    /* ── Header ── */
     header {
-      background: var(--text);
-      padding: 18px 20px;
+      background: var(--black);
+      padding: 0 20px;
+      height: 52px;
+      display: flex;
+      align-items: center;
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
     .header-inner {
-      max-width: 480px;
+      max-width: 520px;
       margin: 0 auto;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 20px;
-      letter-spacing: 0.12em;
-      color: #ffffff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white);
     }
 
-    .logo span { color: #8bc49a; }
-
-    .user-badge {
-      font-family: 'DM Mono', monospace;
+    .user-pill {
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 11px;
-      color: #8bc49a;
-      letter-spacing: 0.08em;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--white);
+      padding: 4px 10px;
+      border-radius: 2px;
     }
 
+    /* ── Container ── */
     .container {
-      max-width: 480px;
+      max-width: 520px;
       margin: 0 auto;
-      padding: 0 16px;
+      padding: 0 20px;
     }
 
     .screen { display: none; }
     .screen.active { display: block; }
 
-    /* step bar */
+    /* ── Step bar ── */
     .step-bar {
       display: flex;
-      gap: 3px;
-      padding: 20px 0 4px;
+      gap: 2px;
+      padding: 24px 0 0;
     }
+
     .step-pip {
-      height: 2px;
+      height: 1px;
       flex: 1;
-      background: var(--border);
-      border-radius: 1px;
+      background: var(--light);
       transition: background 0.3s;
     }
-    .step-pip.done   { background: var(--accent); }
-    .step-pip.active { background: var(--accent2); }
 
-    /* labels */
-    .section-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.18em;
+    .step-pip.done   { background: var(--black); }
+    .step-pip.active { background: var(--dark); }
+
+    /* ── Page title block ── */
+    .page-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin: 22px 0 10px;
+      line-height: 1;
+      margin: 20px 0 4px;
     }
 
-    .section-sub {
+    .page-sub {
       font-size: 13px;
-      color: var(--text-muted);
-      margin-top: -6px;
-      margin-bottom: 14px;
+      color: var(--mid);
+      letter-spacing: 0.01em;
+      margin-bottom: 24px;
       line-height: 1.5;
     }
 
-    /* resort cards */
+    /* ── Section label ── */
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin: 28px 0 10px;
+      border-top: 1px solid var(--light);
+      padding-top: 14px;
+    }
+
+    /* ── Resort cards ── */
     .card-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 1px;
+      background: var(--light);
+      border: 1px solid var(--light);
     }
 
     .select-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 4px;
-      padding: 14px 14px;
+      background: var(--white);
+      padding: 16px;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background 0.1s;
     }
 
-    .select-card:hover { border-color: var(--accent2); }
-
-    .select-card.selected {
-      border-color: var(--accent);
-      background: #edf3ef;
-    }
+    .select-card:hover   { background: var(--off); }
+    .select-card.selected { background: var(--black); }
+    .select-card.selected .card-name { color: var(--white); }
+    .select-card.selected .card-sub  { color: var(--mid); }
 
     .card-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 17px;
-      letter-spacing: 0.06em;
-      color: var(--text);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .card-sub {
       font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 2px;
-      font-family: 'DM Mono', monospace;
+      color: var(--mid);
+      margin-top: 3px;
+      letter-spacing: 0.04em;
     }
 
-    /* trail search */
+    /* ── Trail search ── */
     .search-wrap {
       position: relative;
-      margin-bottom: 10px;
+      margin-bottom: 1px;
     }
 
     .search-wrap input {
       width: 100%;
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 4px;
-      padding: 12px 16px 12px 38px;
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
+      background: var(--white);
+      border: 1px solid var(--light);
+      border-bottom: none;
+      padding: 13px 16px 13px 16px;
+      color: var(--black);
+      font-family: 'Barlow', sans-serif;
+      font-size: 14px;
       outline: none;
-      transition: border-color 0.15s;
     }
 
-    .search-wrap input:focus { border-color: var(--accent); }
-    .search-wrap input::placeholder { color: var(--text-muted); }
-
-    .search-icon {
-      position: absolute;
-      left: 13px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      font-size: 15px;
-    }
+    .search-wrap input:focus { border-color: var(--dark); }
+    .search-wrap input::placeholder { color: var(--mid); }
 
     .trail-list {
-      max-height: 340px;
+      max-height: 360px;
       overflow-y: auto;
-      border: 1.5px solid var(--border);
-      border-radius: 4px;
-      background: var(--surface);
+      border: 1px solid var(--light);
     }
 
     .trail-item {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--light);
       cursor: pointer;
-      transition: background 0.1s;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      transition: background 0.08s;
     }
 
     .trail-item:last-child { border-bottom: none; }
-    .trail-item:hover { background: var(--surface2); }
-    .trail-item.selected { background: #edf3ef; }
+    .trail-item:hover { background: var(--off); }
+
+    .trail-item.selected {
+      background: var(--black);
+    }
+
+    .trail-item.selected .trail-name { color: var(--white); }
+    .trail-item.selected .trail-diff { opacity: 0.6; }
 
     .trail-name {
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 400;
+      letter-spacing: 0.01em;
     }
 
     .trail-diff {
-      font-family: 'DM Mono', monospace;
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 10px;
-      padding: 3px 8px;
-      border-radius: 2px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 500;
     }
 
-    .diff-green { background: var(--tag-green); color: #2d6b3a; }
-    .diff-blue  { background: var(--tag-blue);  color: #2d4a6b; }
-    .diff-black { background: var(--tag-black);  color: #333; }
-    .diff-dbl   { background: #fdecea; color: var(--red); }
-
-    /* chips */
+    /* ── Chips ── */
     .chip-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: 6px;
       margin-bottom: 4px;
     }
 
     .chip {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 13px;
+      border: 1px solid var(--light);
+      border-radius: 0;
+      padding: 7px 13px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.02em;
       cursor: pointer;
-      transition: all 0.12s;
+      transition: all 0.1s;
       user-select: none;
+      background: var(--white);
+      color: var(--dark);
     }
 
-    .chip:hover { border-color: var(--accent2); }
+    .chip:hover { border-color: var(--dark); }
 
     .chip.selected {
-      background: #edf3ef;
-      border-color: var(--accent);
-      color: var(--accent);
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
     }
 
-    /* rating block */
+    /* ── Rating card ── */
     .rating-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 6px;
-      padding: 20px;
-      margin: 12px 0;
+      border: 1px solid var(--light);
+      padding: 24px;
+      margin: 16px 0;
     }
 
     .rating-question {
       font-size: 14px;
-      line-height: 1.6;
-      color: var(--text);
-      margin-bottom: 18px;
-      font-weight: 400;
+      line-height: 1.7;
+      color: var(--dark);
+      margin-bottom: 24px;
     }
 
     .rating-question strong {
       font-weight: 600;
-      color: var(--text);
+      color: var(--black);
     }
 
-    .score-display {
-      text-align: center;
-      margin-bottom: 14px;
+    .rating-question em {
+      font-style: italic;
+      color: var(--mid);
+      font-size: 12px;
     }
 
-    .score-big {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 64px;
-      color: var(--accent);
-      line-height: 1;
-      letter-spacing: 0.04em;
-    }
-
-    .score-sub {
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
-
-    .decimal-input {
-      width: 100%;
-      text-align: center;
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 4px;
-      padding: 14px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 36px;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-      outline: none;
-      transition: border-color 0.15s;
-      -moz-appearance: textfield;
-    }
-
-    .decimal-input:focus { border-color: var(--accent); }
-    .decimal-input::-webkit-outer-spin-button,
-    .decimal-input::-webkit-inner-spin-button { -webkit-appearance: none; }
-
-    .range-row {
-      display: flex;
-      justify-content: space-between;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      color: var(--text-muted);
-      letter-spacing: 0.06em;
-      margin-top: 8px;
-      text-transform: uppercase;
-    }
-
-    /* model score reveal */
-    .model-reveal {
-      background: var(--text);
-      color: #fff;
-      border-radius: 6px;
-      padding: 18px 20px;
-      margin: 14px 0;
+    .score-row {
       display: flex;
       align-items: center;
       gap: 16px;
     }
 
-    .model-score-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 48px;
-      color: #8bc49a;
+    .decimal-input {
+      flex: 1;
+      background: var(--off);
+      border: 1px solid var(--light);
+      border-radius: 0;
+      padding: 16px 20px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 42px;
+      color: var(--black);
+      letter-spacing: 0.04em;
+      outline: none;
+      transition: border-color 0.15s;
+      -moz-appearance: textfield;
+      text-align: center;
+    }
+
+    .decimal-input:focus { border-color: var(--black); background: var(--white); }
+    .decimal-input::-webkit-outer-spin-button,
+    .decimal-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    .score-scale {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--mid);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Model reveal ── */
+    .model-reveal {
+      border: 1px solid var(--black);
+      padding: 20px 24px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .model-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 52px;
+      color: var(--black);
       line-height: 1;
       flex-shrink: 0;
     }
 
-    .model-score-text { font-size: 12px; color: #aaa; line-height: 1.5; }
-    .model-score-text strong { color: #fff; font-size: 13px; }
-
-    /* name screen */
-    .name-wrap {
-      padding: 40px 0 20px;
-    }
-
-    .name-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 32px;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
-    }
-
-    .name-sub {
-      font-size: 14px;
-      color: var(--text-muted);
+    .model-text {
+      font-size: 12px;
+      color: var(--mid);
       line-height: 1.6;
-      margin-bottom: 28px;
     }
 
-    .text-input {
+    .model-text strong {
+      display: block;
+      font-size: 13px;
+      color: var(--black);
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    /* ── Textarea ── */
+    textarea {
       width: 100%;
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 4px;
+      background: var(--white);
+      border: 1px solid var(--light);
       padding: 14px 16px;
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
+      color: var(--black);
+      font-family: 'Barlow', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      resize: none;
       outline: none;
       transition: border-color 0.15s;
-      margin-bottom: 10px;
+      line-height: 1.6;
     }
 
-    .text-input:focus { border-color: var(--accent); }
-    .text-input::placeholder { color: var(--text-muted); }
+    textarea:focus { border-color: var(--black); }
+    textarea::placeholder { color: var(--mid); }
 
-    textarea.text-input {
-      resize: none;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    /* buttons */
+    /* ── Buttons ── */
     .btn {
       width: 100%;
-      padding: 15px;
+      padding: 16px;
       border: none;
-      border-radius: 4px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 16px;
-      letter-spacing: 0.14em;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.12s;
       margin-top: 8px;
+      border-radius: 0;
     }
 
     .btn-primary {
-      background: var(--accent);
-      color: #fff;
+      background: var(--black);
+      color: var(--white);
     }
 
-    .btn-primary:hover { background: var(--accent2); }
+    .btn-primary:hover { background: var(--dark); }
 
     .btn-primary:disabled {
-      background: var(--border);
-      color: var(--text-muted);
+      background: var(--light);
+      color: var(--mid);
       cursor: not-allowed;
     }
 
     .btn-ghost {
       background: transparent;
-      color: var(--text-muted);
-      border: 1.5px solid var(--border);
+      color: var(--mid);
+      border: 1px solid var(--light);
     }
 
-    .btn-ghost:hover { color: var(--text); border-color: var(--text-muted); }
+    .btn-ghost:hover { color: var(--black); border-color: var(--dark); }
 
-    /* success */
-    .success-wrap {
-      text-align: center;
-      padding: 60px 20px 40px;
+    /* ── Name screen ── */
+    .name-screen {
+      padding: 48px 0 32px;
     }
 
-    .success-icon { font-size: 52px; margin-bottom: 20px; }
+    .name-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 12px;
+    }
+
+    .name-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 24px;
+    }
+
+    .name-body {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--dark);
+      margin-bottom: 32px;
+      max-width: 400px;
+    }
+
+    .text-input {
+      width: 100%;
+      background: var(--white);
+      border: 1px solid var(--light);
+      padding: 14px 16px;
+      color: var(--black);
+      font-family: 'Barlow', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.15s;
+      margin-bottom: 8px;
+      border-radius: 0;
+    }
+
+    .text-input:focus { border-color: var(--black); }
+    .text-input::placeholder { color: var(--mid); }
+
+    /* ── Success ── */
+    .success-screen {
+      padding: 60px 0 40px;
+    }
+
+    .success-check {
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid var(--black);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 24px;
+    }
 
     .success-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 32px;
-      letter-spacing: 0.08em;
-      margin-bottom: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
     }
 
-    .success-sub {
-      color: var(--text-muted);
+    .success-body {
       font-size: 14px;
-      line-height: 1.6;
-      max-width: 300px;
-      margin: 0 auto 32px;
+      color: var(--mid);
+      line-height: 1.7;
+      max-width: 340px;
+      margin-bottom: 36px;
     }
 
     .divider {
       height: 1px;
-      background: var(--border);
-      margin: 20px 0;
+      background: var(--light);
+      margin: 24px 0;
     }
 
     .mt8  { margin-top: 8px; }
     .mt16 { margin-top: 16px; }
 
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--surface2); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--off); }
+    ::-webkit-scrollbar-thumb { background: var(--light); }
   </style>
 </head>
 <body>
 
 <header>
   <div class="header-inner">
-    <div class="logo">Ski <span>Perception</span> Index</div>
-    <div class="user-badge" id="header-user"></div>
+    <div class="logo">Ski Perception Index</div>
+    <div class="user-pill" id="header-user" style="display:none"></div>
   </div>
 </header>
 
 <div class="container">
 
-  <!-- Screen: Name setup -->
+  <!-- Name -->
   <div class="screen active" id="screen-name">
-    <div class="name-wrap">
-      <div class="name-title">Welcome to the<br>Ski Perception Index</div>
-      <div class="name-sub">You'll be acting as a trail assessor — rating runs based on what you observe so the scores can be validated against other assessors on the same trails. Enter your name or a nickname so we can track your contributions.</div>
+    <div class="name-screen">
+      <div class="name-eyebrow">Research Tool · Trail Assessment</div>
+      <div class="name-headline">Ski<br>Perception<br>Index</div>
+      <div class="name-body">
+        You'll be acting as a trail assessor — rating runs based on what you experience on the mountain so scores can be validated against other assessors on the same trails. Enter your name so we can attribute your contributions.
+      </div>
       <input type="text" class="text-input" id="input-name" placeholder="Your name or nickname" />
       <button class="btn btn-primary" id="btn-name-next" disabled>Begin Assessment</button>
     </div>
   </div>
 
-  <!-- Screen: Resort -->
+  <!-- Resort -->
   <div class="screen" id="screen-resort">
     <div class="step-bar">
       <div class="step-pip active"></div>
@@ -489,12 +539,12 @@
       <div class="step-pip"></div>
       <div class="step-pip"></div>
     </div>
-    <div class="section-label">Select Resort</div>
+    <div class="page-title">Select<br>Resort</div>
     <div class="card-grid" id="resort-grid"></div>
     <button class="btn btn-primary mt16" id="btn-resort-next" disabled>Continue</button>
   </div>
 
-  <!-- Screen: Trail -->
+  <!-- Trail -->
   <div class="screen" id="screen-trail">
     <div class="step-bar">
       <div class="step-pip done"></div>
@@ -503,9 +553,8 @@
       <div class="step-pip"></div>
       <div class="step-pip"></div>
     </div>
-    <div class="section-label">Select Trail</div>
+    <div class="page-title">Select<br>Trail</div>
     <div class="search-wrap">
-      <span class="search-icon">⌕</span>
       <input type="text" id="trail-search" placeholder="Search trails..." />
     </div>
     <div class="trail-list" id="trail-list"></div>
@@ -513,7 +562,7 @@
     <button class="btn btn-ghost mt8" onclick="goTo('screen-resort')">Back</button>
   </div>
 
-  <!-- Screen: Conditions -->
+  <!-- Conditions -->
   <div class="screen" id="screen-conditions">
     <div class="step-bar">
       <div class="step-pip done"></div>
@@ -522,8 +571,9 @@
       <div class="step-pip"></div>
       <div class="step-pip"></div>
     </div>
+    <div class="page-title">Conditions</div>
 
-    <div class="section-label">Snow Conditions</div>
+    <div class="section-label">Snow</div>
     <div class="chip-grid" id="chips-snow"></div>
 
     <div class="section-label">Visibility</div>
@@ -539,7 +589,7 @@
     <button class="btn btn-ghost mt8" onclick="goTo('screen-trail')">Back</button>
   </div>
 
-  <!-- Screen: Rating -->
+  <!-- Rating -->
   <div class="screen" id="screen-rating">
     <div class="step-bar">
       <div class="step-pip done"></div>
@@ -548,68 +598,62 @@
       <div class="step-pip active"></div>
       <div class="step-pip"></div>
     </div>
+    <div class="page-title">Assessment</div>
 
-    <!-- Model score shown to 50% -->
     <div id="model-score-wrap" style="display:none">
       <div class="model-reveal">
-        <div class="model-score-num" id="model-score-val">—</div>
-        <div class="model-score-text">
-          <strong>Current index score for <span id="model-trail-name"></span></strong><br>
-          Based on spatial terrain analysis. Does this match your experience on the trail today?
+        <div class="model-num" id="model-score-val">—</div>
+        <div class="model-text">
+          <strong>Current index score — <span id="model-trail-name"></span></strong>
+          Derived from spatial terrain analysis. Does this match what you experienced today?
         </div>
       </div>
     </div>
 
-    <!-- Primary rating -->
     <div class="rating-card">
       <div class="rating-question">
-        You just skied <strong id="rating-trail-name"></strong>. Based on your experience,
-        what score from <strong>1.0 to 10.0</strong> would you assign this trail in a
-        standardised index — where <strong>1.0</strong> is a completely flat beginner
-        conveyor and <strong>10.0</strong> is the most extreme terrain on the mountain?
+        You just skied <strong id="rating-trail-name"></strong>. Based on your experience, what score from <strong>1.0 to 10.0</strong> would you assign this trail in a standardised index — where <strong>1.0</strong> is a completely flat beginner conveyor and <strong>10.0</strong> is the most extreme terrain on the mountain.
         <br><br>
-        <span style="color:var(--text-muted);font-size:12px">This score will be compared against ratings from other assessors on the same trail.</span>
+        <em>This score will be compared against ratings from other assessors on the same trail.</em>
       </div>
       <input type="number" class="decimal-input" id="input-rating"
-             min="1" max="10" step="0.1" value="5.0" placeholder="5.0" />
-      <div class="range-row">
-        <span>1.0 — Flat beginner conveyor</span>
+             min="1" max="10" step="0.1" value="5.0" />
+      <div class="score-scale">
+        <span>1.0 — Flat beginner run</span>
         <span>10.0 — Most extreme terrain</span>
       </div>
     </div>
 
-    <!-- Accuracy rating (model group only) -->
     <div id="accuracy-block" style="display:none">
       <div class="rating-card">
         <div class="rating-question">
-          The index assigned this trail a score of <strong id="acc-model-val"></strong>.
-          How accurate is that score based on what you experienced today?
+          The index assigned this trail <strong id="acc-model-val"></strong>. How accurate is that score based on what you experienced today?
         </div>
         <input type="number" class="decimal-input" id="input-accuracy"
-               min="1" max="10" step="0.1" value="5.0" placeholder="5.0" />
-        <div class="range-row">
+               min="1" max="10" step="0.1" value="5.0" />
+        <div class="score-scale">
           <span>1.0 — Way too easy</span>
           <span>10.0 — Way too hard</span>
         </div>
       </div>
     </div>
 
-    <div class="section-label">What drove the score? <span style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:11px;text-transform:none;letter-spacing:0;color:var(--text-muted)">Select all that apply</span></div>
+    <div class="section-label">What drove the score? <span style="font-weight:300;font-size:10px;letter-spacing:0.04em;text-transform:none">Select all that apply</span></div>
     <div class="chip-grid" id="chips-factors"></div>
 
-    <div class="section-label mt16">Assessor Notes <span style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:11px;text-transform:none;letter-spacing:0;color:var(--text-muted)">Optional</span></div>
-    <textarea class="text-input" id="notes" rows="3" placeholder="Anything notable about conditions, terrain, or your experience on this run..."></textarea>
+    <div class="section-label">Assessor Notes <span style="font-weight:300;font-size:10px;letter-spacing:0.04em;text-transform:none">Optional</span></div>
+    <textarea id="notes" rows="3" placeholder="Anything notable about conditions, terrain, or your experience on this run..."></textarea>
 
     <button class="btn btn-primary mt16" id="btn-submit">Submit Assessment</button>
     <button class="btn btn-ghost mt8" onclick="goTo('screen-conditions')">Back</button>
   </div>
 
-  <!-- Screen: Success -->
+  <!-- Success -->
   <div class="screen" id="screen-success">
-    <div class="success-wrap">
-      <div class="success-icon">⛷</div>
-      <div class="success-title">Assessment Submitted</div>
-      <div class="success-sub">Your rating has been recorded and will be compared against other assessors on this trail. Every submission improves the model.</div>
+    <div class="success-screen">
+      <div class="success-check">✓</div>
+      <div class="success-title">Assessment<br>Recorded</div>
+      <div class="success-body">Your rating has been logged and will be compared against other assessors on this trail. Every submission improves index accuracy.</div>
       <button class="btn btn-primary" onclick="rateAnother()">Assess Another Trail</button>
       <button class="btn btn-ghost mt8" onclick="changeResort()">Change Resort</button>
     </div>
@@ -620,7 +664,6 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
   const firebaseConfig = {
     apiKey: "AIzaSyAozalXfQ9MfDyNk1-LWllcMFZM0nmDR3w",
     authDomain: "ski-perception-index.firebaseapp.com",
@@ -631,7 +674,6 @@
     appId: "1:954388480800:web:85b6940008f04e1fcf0d45",
     measurementId: "G-W4PP009KLZ"
   };
-
   const app = initializeApp(firebaseConfig);
   const db  = getDatabase(app);
   window._db   = db;
@@ -640,212 +682,109 @@
 </script>
 
 <script>
-// ── Device fingerprint ────────────────────────────────────────────────────────
 function getDeviceId() {
   let id = localStorage.getItem("spi_device_id");
   if (!id) {
-    const fp = [
-      navigator.userAgent,
-      screen.width + "x" + screen.height,
-      screen.colorDepth,
-      Intl.DateTimeFormat().resolvedOptions().timeZone,
-      navigator.language,
-      navigator.hardwareConcurrency || 0,
-      navigator.deviceMemory || 0,
-    ].join("|");
-    // simple hash
+    const fp = [navigator.userAgent, screen.width+"x"+screen.height,
+      screen.colorDepth, Intl.DateTimeFormat().resolvedOptions().timeZone,
+      navigator.language, navigator.hardwareConcurrency||0,
+      navigator.deviceMemory||0].join("|");
     let hash = 0;
-    for (let i = 0; i < fp.length; i++) {
-      hash = ((hash << 5) - hash) + fp.charCodeAt(i);
-      hash |= 0;
-    }
+    for (let i = 0; i < fp.length; i++) { hash = ((hash<<5)-hash)+fp.charCodeAt(i); hash|=0; }
     id = "dev_" + Math.abs(hash).toString(36);
     localStorage.setItem("spi_device_id", id);
   }
   return id;
 }
 
-// ── Resort + Trail Data ───────────────────────────────────────────────────────
 const RESORTS = {
-  "Perisher": {
-    region: "NSW",
-    trails: [
-      { name: "Interceptor", diff: "green" },
-      { name: "Front Valley", diff: "green" },
-      { name: "Basin Run", diff: "green" },
-      { name: "Sundowner", diff: "green" },
-      { name: "Sun Run", diff: "green" },
-      { name: "Perisher Home Trail", diff: "green" },
-      { name: "Smiggins Home Trail", diff: "green" },
-      { name: "Blue Ribbon", diff: "blue" },
-      { name: "Lower Blue Ribbon", diff: "blue" },
-      { name: "Upper Blue Ribbon", diff: "blue" },
-      { name: "Waler", diff: "blue" },
-      { name: "Colt", diff: "blue" },
-      { name: "Brumby", diff: "blue" },
-      { name: "Brumby's Rush", diff: "blue" },
-      { name: "International", diff: "blue" },
-      { name: "Supertrail", diff: "blue" },
-      { name: "Olympic", diff: "blue" },
-      { name: "Slalom Gully", diff: "blue" },
-      { name: "Race Gully", diff: "blue" },
-      { name: "Boomerang", diff: "blue" },
-      { name: "Australia Drift", diff: "blue" },
-      { name: "South Face", diff: "blue" },
-      { name: "Milky Way", diff: "blue" },
-      { name: "North Face", diff: "black" },
-      { name: "Kamikaze", diff: "black" },
-      { name: "Avalanche", diff: "black" },
-      { name: "Gunbarrel", diff: "black" },
-      { name: "Double Trouble", diff: "black" },
-      { name: "Guthries Chutes", diff: "black" },
-      { name: "Blue Lake Chutes", diff: "black" },
-      { name: "North Sentinel Chutes", diff: "black" },
-      { name: "Twynam North Face", diff: "black" },
-      { name: "Black Snake", diff: "black" },
-      { name: "Death Cookie", diff: "black" },
-      { name: "Bloody Hell", diff: "black" },
-    ]
-  },
-  "Thredbo": {
-    region: "NSW",
-    trails: [
-      { name: "Cruiser", diff: "green" },
-      { name: "Lower Cruiser", diff: "green" },
-      { name: "Cruiser Traverse", diff: "green" },
-      { name: "The Bluff", diff: "green" },
-      { name: "Meadows", diff: "green" },
-      { name: "Friday Flat", diff: "green" },
-      { name: "Easy Does It", diff: "green" },
-      { name: "Eagle Way", diff: "blue" },
-      { name: "Upper Supertrail", diff: "blue" },
-      { name: "Lower Supertrail", diff: "blue" },
-      { name: "Cannonball", diff: "blue" },
-      { name: "Merritts", diff: "blue" },
-      { name: "Antons", diff: "blue" },
-      { name: "Sponars", diff: "blue" },
-      { name: "Basin Run", diff: "blue" },
-      { name: "Kosciuszko", diff: "black" },
-      { name: "Men's Downhill", diff: "black" },
-      { name: "Women's Downhill", diff: "black" },
-      { name: "Funnel Web", diff: "black" },
-      { name: "High Noon", diff: "black" },
-      { name: "World Cup", diff: "black" },
-      { name: "Gotcha", diff: "black" },
-      { name: "Ramshead", diff: "black" },
-      { name: "Ruined Castle", diff: "black" },
-    ]
-  },
-  "Mount Hotham": {
-    region: "VIC",
-    trails: [
-      { name: "Village Trail", diff: "green" },
-      { name: "Lower Village Trail", diff: "green" },
-      { name: "Upper Village Trail", diff: "green" },
-      { name: "The Orchard", diff: "green" },
-      { name: "Heavenly Valley", diff: "green" },
-      { name: "Road Runner", diff: "green" },
-      { name: "Skyline", diff: "green" },
-      { name: "Summit Run", diff: "blue" },
-      { name: "Gotcha", diff: "blue" },
-      { name: "Gotcha Face", diff: "blue" },
-      { name: "Gotcha Ridge", diff: "blue" },
-      { name: "Drift Return", diff: "blue" },
-      { name: "Australia Drift", diff: "blue" },
-      { name: "Big D", diff: "blue" },
-      { name: "Exhibition", diff: "blue" },
-      { name: "International", diff: "blue" },
-      { name: "Keogh's", diff: "blue" },
-      { name: "Keogh's Bash", diff: "blue" },
-      { name: "Halley's Comet", diff: "black" },
-      { name: "Gracie's", diff: "black" },
-      { name: "Mary's Slide", diff: "black" },
-      { name: "Lenny's Leap", diff: "black" },
-      { name: "Wotan Chute", diff: "black" },
-      { name: "Backrath Chute", diff: "black" },
-    ]
-  },
-  "Falls Creek": {
-    region: "VIC",
-    trails: [
-      { name: "Wombat's Ramble", diff: "green" },
-      { name: "Wombat Walk", diff: "green" },
-      { name: "Little Downhill", diff: "green" },
-      { name: "Sunny Side", diff: "green" },
-      { name: "Valley Trail", diff: "green" },
-      { name: "Pretty Valley Run", diff: "green" },
-      { name: "Drover's Dream", diff: "blue" },
-      { name: "Federation", diff: "blue" },
-      { name: "Ruined Castle", diff: "blue" },
-      { name: "South Side", diff: "blue" },
-      { name: "Summit to Loch", diff: "blue" },
-      { name: "Towers", diff: "blue" },
-      { name: "Bull Run", diff: "blue" },
-      { name: "Shakey Knees", diff: "blue" },
-      { name: "Howqua", diff: "blue" },
-      { name: "Wombat", diff: "blue" },
-      { name: "Roaring Forties", diff: "black" },
-      { name: "West Peak North Face", diff: "black" },
-      { name: "Tawonga Drop", diff: "black" },
-      { name: "Bogong Creek", diff: "black" },
-      { name: "High Noon Glades", diff: "black" },
-      { name: "Rocky Road", diff: "black" },
-    ]
-  },
-  "Mount Buller": {
-    region: "VIC",
-    trails: [
-      { name: "Home Run", diff: "green" },
-      { name: "Bourke Street", diff: "green" },
-      { name: "Little Beauty", diff: "green" },
-      { name: "Chamois Lower", diff: "green" },
-      { name: "Chamois Upper", diff: "green" },
-      { name: "Blue Ribbon Trail", diff: "blue" },
-      { name: "Abom", diff: "blue" },
-      { name: "Northside Express", diff: "blue" },
-      { name: "Skyline", diff: "blue" },
-      { name: "Ridge Run", diff: "blue" },
-      { name: "Tirol", diff: "blue" },
-      { name: "International Bumps", diff: "blue" },
-      { name: "Koflers", diff: "blue" },
-      { name: "Fanny's Finish", diff: "blue" },
-      { name: "Stag Gully", diff: "black" },
-      { name: "Olympic", diff: "black" },
-      { name: "Ego Alley", diff: "black" },
-      { name: "Loch", diff: "black" },
-    ]
-  },
-  "Charlotte Pass": {
-    region: "NSW",
-    trails: [
-      { name: "Easy Street", diff: "green" },
-      { name: "Syd's Run", diff: "green" },
-      { name: "Main Street", diff: "blue" },
-      { name: "Summit Right", diff: "blue" },
-      { name: "West Peak", diff: "black" },
-      { name: "Pulpit Cornice", diff: "black" },
-    ]
-  },
-  "Selwyn": {
-    region: "NSW",
-    trails: [
-      { name: "Beginner Bliss", diff: "green" },
-      { name: "Easy Rider", diff: "green" },
-      { name: "Canyon Trail", diff: "blue" },
-      { name: "Chute", diff: "blue" },
-      { name: "Slalom", diff: "black" },
-    ]
-  },
-  "Mount Baw Baw": {
-    region: "VIC",
-    trails: [
-      { name: "Playground", diff: "green" },
-      { name: "Nursery Slope", diff: "green" },
-      { name: "Ridge Run", diff: "blue" },
-      { name: "Gully Down", diff: "blue" },
-      { name: "Summit Run", diff: "black" },
-    ]
-  }
+  "Perisher": { region:"NSW · Snowy Mountains", trails:[
+    {name:"Interceptor",diff:"green"},{name:"Front Valley",diff:"green"},
+    {name:"Basin Run",diff:"green"},{name:"Sundowner",diff:"green"},
+    {name:"Sun Run",diff:"green"},{name:"Perisher Home Trail",diff:"green"},
+    {name:"Smiggins Home Trail",diff:"green"},{name:"Blue Ribbon",diff:"blue"},
+    {name:"Lower Blue Ribbon",diff:"blue"},{name:"Upper Blue Ribbon",diff:"blue"},
+    {name:"Waler",diff:"blue"},{name:"Colt",diff:"blue"},
+    {name:"Brumby",diff:"blue"},{name:"Brumby's Rush",diff:"blue"},
+    {name:"International",diff:"blue"},{name:"Supertrail",diff:"blue"},
+    {name:"Olympic",diff:"blue"},{name:"Slalom Gully",diff:"blue"},
+    {name:"Race Gully",diff:"blue"},{name:"Boomerang",diff:"blue"},
+    {name:"Australia Drift",diff:"blue"},{name:"South Face",diff:"blue"},
+    {name:"Milky Way",diff:"blue"},{name:"North Face",diff:"black"},
+    {name:"Kamikaze",diff:"black"},{name:"Avalanche",diff:"black"},
+    {name:"Gunbarrel",diff:"black"},{name:"Double Trouble",diff:"black"},
+    {name:"Guthries Chutes",diff:"black"},{name:"Blue Lake Chutes",diff:"black"},
+    {name:"North Sentinel Chutes",diff:"black"},{name:"Twynam North Face",diff:"black"},
+    {name:"Black Snake",diff:"black"},{name:"Death Cookie",diff:"black"},
+    {name:"Bloody Hell",diff:"black"}
+  ]},
+  "Thredbo": { region:"NSW · Snowy Mountains", trails:[
+    {name:"Cruiser",diff:"green"},{name:"Lower Cruiser",diff:"green"},
+    {name:"Cruiser Traverse",diff:"green"},{name:"The Bluff",diff:"green"},
+    {name:"Meadows",diff:"green"},{name:"Friday Flat",diff:"green"},
+    {name:"Easy Does It",diff:"green"},{name:"Eagle Way",diff:"blue"},
+    {name:"Upper Supertrail",diff:"blue"},{name:"Lower Supertrail",diff:"blue"},
+    {name:"Cannonball",diff:"blue"},{name:"Merritts",diff:"blue"},
+    {name:"Antons",diff:"blue"},{name:"Sponars",diff:"blue"},
+    {name:"Basin Run",diff:"blue"},{name:"Kosciuszko",diff:"black"},
+    {name:"Men's Downhill",diff:"black"},{name:"Women's Downhill",diff:"black"},
+    {name:"Funnel Web",diff:"black"},{name:"High Noon",diff:"black"},
+    {name:"World Cup",diff:"black"},{name:"Gotcha",diff:"black"},
+    {name:"Ramshead",diff:"black"},{name:"Ruined Castle",diff:"black"}
+  ]},
+  "Mount Hotham": { region:"VIC · Alpine", trails:[
+    {name:"Village Trail",diff:"green"},{name:"Lower Village Trail",diff:"green"},
+    {name:"Upper Village Trail",diff:"green"},{name:"The Orchard",diff:"green"},
+    {name:"Heavenly Valley",diff:"green"},{name:"Road Runner",diff:"green"},
+    {name:"Skyline",diff:"green"},{name:"Summit Run",diff:"blue"},
+    {name:"Gotcha",diff:"blue"},{name:"Gotcha Face",diff:"blue"},
+    {name:"Gotcha Ridge",diff:"blue"},{name:"Drift Return",diff:"blue"},
+    {name:"Australia Drift",diff:"blue"},{name:"Big D",diff:"blue"},
+    {name:"Exhibition",diff:"blue"},{name:"International",diff:"blue"},
+    {name:"Keogh's",diff:"blue"},{name:"Keogh's Bash",diff:"blue"},
+    {name:"Halley's Comet",diff:"black"},{name:"Gracie's",diff:"black"},
+    {name:"Mary's Slide",diff:"black"},{name:"Lenny's Leap",diff:"black"},
+    {name:"Wotan Chute",diff:"black"},{name:"Backrath Chute",diff:"black"}
+  ]},
+  "Falls Creek": { region:"VIC · Alpine", trails:[
+    {name:"Wombat's Ramble",diff:"green"},{name:"Wombat Walk",diff:"green"},
+    {name:"Little Downhill",diff:"green"},{name:"Sunny Side",diff:"green"},
+    {name:"Valley Trail",diff:"green"},{name:"Pretty Valley Run",diff:"green"},
+    {name:"Drover's Dream",diff:"blue"},{name:"Federation",diff:"blue"},
+    {name:"Ruined Castle",diff:"blue"},{name:"South Side",diff:"blue"},
+    {name:"Summit to Loch",diff:"blue"},{name:"Towers",diff:"blue"},
+    {name:"Bull Run",diff:"blue"},{name:"Shakey Knees",diff:"blue"},
+    {name:"Howqua",diff:"blue"},{name:"Wombat",diff:"blue"},
+    {name:"Roaring Forties",diff:"black"},{name:"West Peak North Face",diff:"black"},
+    {name:"Tawonga Drop",diff:"black"},{name:"Bogong Creek",diff:"black"},
+    {name:"High Noon Glades",diff:"black"},{name:"Rocky Road",diff:"black"}
+  ]},
+  "Mount Buller": { region:"VIC · Alpine", trails:[
+    {name:"Home Run",diff:"green"},{name:"Bourke Street",diff:"green"},
+    {name:"Little Beauty",diff:"green"},{name:"Chamois Lower",diff:"green"},
+    {name:"Chamois Upper",diff:"green"},{name:"Blue Ribbon Trail",diff:"blue"},
+    {name:"Abom",diff:"blue"},{name:"Northside Express",diff:"blue"},
+    {name:"Skyline",diff:"blue"},{name:"Ridge Run",diff:"blue"},
+    {name:"Tirol",diff:"blue"},{name:"International Bumps",diff:"blue"},
+    {name:"Koflers",diff:"blue"},{name:"Fanny's Finish",diff:"blue"},
+    {name:"Stag Gully",diff:"black"},{name:"Olympic",diff:"black"},
+    {name:"Ego Alley",diff:"black"},{name:"Loch",diff:"black"}
+  ]},
+  "Charlotte Pass": { region:"NSW · Snowy Mountains", trails:[
+    {name:"Easy Street",diff:"green"},{name:"Syd's Run",diff:"green"},
+    {name:"Main Street",diff:"blue"},{name:"Summit Right",diff:"blue"},
+    {name:"West Peak",diff:"black"},{name:"Pulpit Cornice",diff:"black"}
+  ]},
+  "Selwyn": { region:"NSW · Snowy Mountains", trails:[
+    {name:"Beginner Bliss",diff:"green"},{name:"Easy Rider",diff:"green"},
+    {name:"Canyon Trail",diff:"blue"},{name:"Chute",diff:"blue"},
+    {name:"Slalom",diff:"black"}
+  ]},
+  "Mount Baw Baw": { region:"VIC · Central Highlands", trails:[
+    {name:"Playground",diff:"green"},{name:"Nursery Slope",diff:"green"},
+    {name:"Ridge Run",diff:"blue"},{name:"Gully Down",diff:"blue"},
+    {name:"Summit Run",diff:"black"}
+  ]}
 };
 
 const CHIPS = {
@@ -857,216 +796,172 @@ const CHIPS = {
             "Visibility","Trail Width","Crowd Pressure","Terrain Variability","Icy Patches","Wind"]
 };
 
-// ── State ─────────────────────────────────────────────────────────────────────
-let state = {
-  name: "",
-  deviceId: getDeviceId(),
-  resort: null,
-  trail: null,
-  conditions: { snow:[], vis:[], time:[], temp:[] },
-  factors: [],
-  showModel: false,
-};
-
-// Model scores — populate when pipeline is ready
-// Format: { "Resort||TrailName": 6.2 }
 const MODEL_SCORES = {};
 
-// ── Nav ───────────────────────────────────────────────────────────────────────
+let state = {
+  name:"", deviceId:getDeviceId(), resort:null, trail:null,
+  conditions:{snow:[],vis:[],time:[],temp:[]},
+  factors:[], showModel:false
+};
+
 function goTo(id) {
-  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   window.scrollTo(0,0);
 }
 window.goTo = goTo;
 
-// ── Chips ─────────────────────────────────────────────────────────────────────
-function buildChips(containerId, items, stateArr) {
-  const wrap = document.getElementById(containerId);
-  wrap.innerHTML = "";
+function buildChips(cid, items, arr) {
+  const w = document.getElementById(cid); w.innerHTML="";
   items.forEach(item => {
-    const chip = document.createElement("div");
-    chip.className = "chip";
-    chip.textContent = item;
-    chip.onclick = () => {
-      const idx = stateArr.indexOf(item);
-      if (idx > -1) { stateArr.splice(idx,1); chip.classList.remove("selected"); }
-      else          { stateArr.push(item);    chip.classList.add("selected"); }
+    const c = document.createElement("div");
+    c.className="chip"; c.textContent=item;
+    c.onclick=()=>{
+      const i=arr.indexOf(item);
+      if(i>-1){arr.splice(i,1);c.classList.remove("selected");}
+      else{arr.push(item);c.classList.add("selected");}
     };
-    wrap.appendChild(chip);
+    w.appendChild(c);
   });
 }
 
-// ── Resort grid ───────────────────────────────────────────────────────────────
 function buildResortGrid() {
-  const grid = document.getElementById("resort-grid");
-  grid.innerHTML = "";
-  Object.entries(RESORTS).forEach(([name, data]) => {
-    const card = document.createElement("div");
-    card.className = "select-card";
-    card.innerHTML = `<div class="card-name">${name}</div><div class="card-sub">${data.region} · ${data.trails.length} trails</div>`;
-    card.onclick = () => {
-      document.querySelectorAll("#resort-grid .select-card").forEach(c => c.classList.remove("selected"));
-      card.classList.add("selected");
-      state.resort = name;
-      document.getElementById("btn-resort-next").disabled = false;
+  const g = document.getElementById("resort-grid"); g.innerHTML="";
+  Object.entries(RESORTS).forEach(([name,data])=>{
+    const c=document.createElement("div"); c.className="select-card";
+    c.innerHTML=`<div class="card-name">${name}</div><div class="card-sub">${data.region} &middot; ${data.trails.length} trails</div>`;
+    c.onclick=()=>{
+      document.querySelectorAll("#resort-grid .select-card").forEach(x=>x.classList.remove("selected"));
+      c.classList.add("selected"); state.resort=name;
+      document.getElementById("btn-resort-next").disabled=false;
     };
-    grid.appendChild(card);
+    g.appendChild(c);
   });
 }
 
-// ── Trail list ────────────────────────────────────────────────────────────────
-function buildTrailList(filter = "") {
-  const list = document.getElementById("trail-list");
-  list.innerHTML = "";
-  if (!state.resort) return;
-  const trails = RESORTS[state.resort].trails.filter(t =>
-    t.name.toLowerCase().includes(filter.toLowerCase())
-  );
-  if (trails.length === 0) {
-    list.innerHTML = `<div style="padding:20px;text-align:center;color:var(--text-muted);font-size:13px">No trails found</div>`;
+function buildTrailList(filter="") {
+  const list=document.getElementById("trail-list"); list.innerHTML="";
+  if(!state.resort) return;
+  const trails=RESORTS[state.resort].trails.filter(t=>t.name.toLowerCase().includes(filter.toLowerCase()));
+  if(!trails.length){
+    list.innerHTML=`<div style="padding:20px;text-align:center;color:var(--mid);font-size:13px">No trails found</div>`;
     return;
   }
-  trails.forEach(trail => {
-    const item = document.createElement("div");
-    item.className = "trail-item" + (state.trail === trail.name ? " selected" : "");
-    const diffMap = { green:"Green", blue:"Blue", black:"Black", dbl:"Dbl Black" };
-    item.innerHTML = `<span class="trail-name">${trail.name}</span><span class="trail-diff diff-${trail.diff}">${diffMap[trail.diff]||trail.diff}</span>`;
-    item.onclick = () => {
-      document.querySelectorAll(".trail-item").forEach(i => i.classList.remove("selected"));
-      item.classList.add("selected");
-      state.trail = trail.name;
-      document.getElementById("btn-trail-next").disabled = false;
+  const diffLabel={green:"Green",blue:"Blue",black:"Black",dbl:"Dbl Black"};
+  trails.forEach(trail=>{
+    const item=document.createElement("div");
+    item.className="trail-item"+(state.trail===trail.name?" selected":"");
+    item.innerHTML=`<span class="trail-name">${trail.name}</span><span class="trail-diff">${diffLabel[trail.diff]||trail.diff}</span>`;
+    item.onclick=()=>{
+      document.querySelectorAll(".trail-item").forEach(i=>i.classList.remove("selected"));
+      item.classList.add("selected"); state.trail=trail.name;
+      document.getElementById("btn-trail-next").disabled=false;
     };
     list.appendChild(item);
   });
 }
 
-// ── Rating screen setup ───────────────────────────────────────────────────────
 function setupRatingScreen() {
-  document.getElementById("rating-trail-name").textContent = state.trail;
-  state.showModel = Math.random() < 0.5;
-  const key = state.resort + "||" + state.trail;
-  const score = MODEL_SCORES[key] || null;
-  const modelWrap = document.getElementById("model-score-wrap");
-  const accBlock  = document.getElementById("accuracy-block");
-
-  if (state.showModel && score !== null) {
-    modelWrap.style.display = "flex";
-    document.getElementById("model-score-val").textContent  = score.toFixed(1);
-    document.getElementById("model-trail-name").textContent = state.trail;
-    document.getElementById("acc-model-val").textContent    = score.toFixed(1);
-    accBlock.style.display = "block";
-  } else {
-    modelWrap.style.display = "none";
-    accBlock.style.display  = "none";
-  }
-
-  document.getElementById("input-rating").value   = "5.0";
-  document.getElementById("input-accuracy").value = "5.0";
-  document.getElementById("notes").value = "";
-  state.factors = [];
-  document.querySelectorAll("#chips-factors .chip").forEach(c => c.classList.remove("selected"));
+  document.getElementById("rating-trail-name").textContent=state.trail;
+  state.showModel=Math.random()<0.5;
+  const key=state.resort+"||"+state.trail;
+  const score=MODEL_SCORES[key]||null;
+  const mw=document.getElementById("model-score-wrap");
+  const ab=document.getElementById("accuracy-block");
+  if(state.showModel&&score!==null){
+    mw.style.display="flex";
+    document.getElementById("model-score-val").textContent=score.toFixed(1);
+    document.getElementById("model-trail-name").textContent=state.trail;
+    document.getElementById("acc-model-val").textContent=score.toFixed(1);
+    ab.style.display="block";
+  } else { mw.style.display="none"; ab.style.display="none"; }
+  document.getElementById("input-rating").value="5.0";
+  document.getElementById("input-accuracy").value="5.0";
+  document.getElementById("notes").value="";
+  state.factors=[];
+  document.querySelectorAll("#chips-factors .chip").forEach(c=>c.classList.remove("selected"));
 }
 
-// ── Submit ────────────────────────────────────────────────────────────────────
 async function submitRating() {
-  const btn = document.getElementById("btn-submit");
-  btn.disabled = true;
-  btn.textContent = "Submitting...";
-
-  const ratingVal  = parseFloat(document.getElementById("input-rating").value)  || 5.0;
-  const accuracyVal= parseFloat(document.getElementById("input-accuracy").value) || null;
-
-  const payload = {
-    assessor_name:   state.name,
-    device_id:       state.deviceId,
-    resort:          state.resort,
-    trail:           state.trail,
-    conditions:      state.conditions,
-    factors:         state.factors,
-    trail_score:     Math.min(10, Math.max(1, ratingVal)),
-    accuracy_score:  state.showModel ? Math.min(10, Math.max(1, accuracyVal)) : null,
-    model_shown:     state.showModel,
-    notes:           document.getElementById("notes").value,
-    timestamp:       new Date().toISOString(),
+  const btn=document.getElementById("btn-submit");
+  btn.disabled=true; btn.textContent="Submitting...";
+  const rv=parseFloat(document.getElementById("input-rating").value)||5.0;
+  const av=parseFloat(document.getElementById("input-accuracy").value)||null;
+  const payload={
+    assessor_name:state.name, device_id:state.deviceId,
+    resort:state.resort, trail:state.trail,
+    conditions:state.conditions, factors:state.factors,
+    trail_score:Math.min(10,Math.max(1,rv)),
+    accuracy_score:state.showModel?Math.min(10,Math.max(1,av)):null,
+    model_shown:state.showModel,
+    notes:document.getElementById("notes").value,
+    timestamp:new Date().toISOString()
   };
-
   try {
-    await window._push(window._ref(window._db, "ratings"), payload);
+    await window._push(window._ref(window._db,"ratings"),payload);
     goTo("screen-success");
   } catch(e) {
-    alert("Submission failed — check your connection and try again.");
+    alert("Submission failed — check connection and try again.");
     console.error(e);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Submit Assessment";
-  }
+  } finally { btn.disabled=false; btn.textContent="Submit Assessment"; }
 }
 
-// ── After success ─────────────────────────────────────────────────────────────
-window.rateAnother = function() {
-  state.trail = null;
-  state.conditions = { snow:[], vis:[], time:[], temp:[] };
-  buildTrailList();
-  document.getElementById("trail-search").value = "";
-  document.getElementById("btn-trail-next").disabled = true;
+window.rateAnother=function(){
+  state.trail=null; state.conditions={snow:[],vis:[],time:[],temp:[]};
+  buildTrailList(); document.getElementById("trail-search").value="";
+  document.getElementById("btn-trail-next").disabled=true;
   goTo("screen-trail");
 };
 
-window.changeResort = function() {
-  state.resort = null;
-  state.trail  = null;
-  state.conditions = { snow:[], vis:[], time:[], temp:[] };
-  document.querySelectorAll("#resort-grid .select-card").forEach(c => c.classList.remove("selected"));
-  document.getElementById("btn-resort-next").disabled = true;
+window.changeResort=function(){
+  state.resort=null; state.trail=null;
+  state.conditions={snow:[],vis:[],time:[],temp:[]};
+  document.querySelectorAll("#resort-grid .select-card").forEach(c=>c.classList.remove("selected"));
+  document.getElementById("btn-resort-next").disabled=true;
   goTo("screen-resort");
 };
 
-// ── Wire buttons ──────────────────────────────────────────────────────────────
-document.getElementById("input-name").oninput = function() {
-  document.getElementById("btn-name-next").disabled = this.value.trim().length < 2;
+document.getElementById("input-name").oninput=function(){
+  document.getElementById("btn-name-next").disabled=this.value.trim().length<2;
 };
 
-document.getElementById("btn-name-next").onclick = function() {
-  state.name = document.getElementById("input-name").value.trim();
-  localStorage.setItem("spi_name", state.name);
-  document.getElementById("header-user").textContent = state.name.toUpperCase();
-  buildResortGrid();
-  goTo("screen-resort");
+document.getElementById("btn-name-next").onclick=function(){
+  state.name=document.getElementById("input-name").value.trim();
+  localStorage.setItem("spi_name",state.name);
+  const badge=document.getElementById("header-user");
+  badge.textContent=state.name.toUpperCase();
+  badge.style.display="block";
+  buildResortGrid(); goTo("screen-resort");
 };
 
-document.getElementById("btn-resort-next").onclick = () => {
-  state.trail = null;
-  buildTrailList();
-  document.getElementById("trail-search").value = "";
-  document.getElementById("btn-trail-next").disabled = true;
+document.getElementById("btn-resort-next").onclick=()=>{
+  state.trail=null; buildTrailList();
+  document.getElementById("trail-search").value="";
+  document.getElementById("btn-trail-next").disabled=true;
   goTo("screen-trail");
 };
 
-document.getElementById("btn-trail-next").onclick = () => {
-  state.conditions = { snow:[], vis:[], time:[], temp:[] };
-  buildChips("chips-snow",    CHIPS.snow,    state.conditions.snow);
-  buildChips("chips-vis",     CHIPS.vis,     state.conditions.vis);
-  buildChips("chips-time",    CHIPS.time,    state.conditions.time);
-  buildChips("chips-temp",    CHIPS.temp,    state.conditions.temp);
+document.getElementById("btn-trail-next").onclick=()=>{
+  state.conditions={snow:[],vis:[],time:[],temp:[]};
+  buildChips("chips-snow",CHIPS.snow,state.conditions.snow);
+  buildChips("chips-vis",CHIPS.vis,state.conditions.vis);
+  buildChips("chips-time",CHIPS.time,state.conditions.time);
+  buildChips("chips-temp",CHIPS.temp,state.conditions.temp);
   goTo("screen-conditions");
 };
 
-document.getElementById("btn-cond-next").onclick = () => {
-  buildChips("chips-factors", CHIPS.factors, state.factors);
-  setupRatingScreen();
-  goTo("screen-rating");
+document.getElementById("btn-cond-next").onclick=()=>{
+  buildChips("chips-factors",CHIPS.factors,state.factors);
+  setupRatingScreen(); goTo("screen-rating");
 };
 
-document.getElementById("btn-submit").onclick = submitRating;
-document.getElementById("trail-search").oninput = e => buildTrailList(e.target.value);
+document.getElementById("btn-submit").onclick=submitRating;
+document.getElementById("trail-search").oninput=e=>buildTrailList(e.target.value);
 
-// ── Restore name if returning user ────────────────────────────────────────────
-const savedName = localStorage.getItem("spi_name");
-if (savedName) {
-  document.getElementById("input-name").value = savedName;
-  document.getElementById("btn-name-next").disabled = false;
+const saved=localStorage.getItem("spi_name");
+if(saved){
+  document.getElementById("input-name").value=saved;
+  document.getElementById("btn-name-next").disabled=false;
 }
 </script>
 </body>
