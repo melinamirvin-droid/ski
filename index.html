@@ -847,11 +847,13 @@ function buildTrailList(filter="") {
     list.innerHTML=`<div style="padding:20px;text-align:center;color:var(--mid);font-size:13px">No trails found</div>`;
     return;
   }
-  const diffLabel={green:"Green",blue:"Blue",black:"Black",dbl:"Dbl Black"};
   trails.forEach(trail=>{
     const item=document.createElement("div");
     item.className="trail-item"+(state.trail===trail.name?" selected":"");
-    item.innerHTML=`<span class="trail-name">${trail.name}</span><span class="trail-diff">${diffLabel[trail.diff]||trail.diff}</span>`;
+    const key=state.resort+"||"+trail.name;
+    const score=MODEL_SCORES[key];
+    const scoreLabel = score !== undefined ? score.toFixed(1) : "—";
+    item.innerHTML=`<span class="trail-name">${trail.name}</span><span class="trail-diff">${scoreLabel}</span>`;
     item.onclick=()=>{
       document.querySelectorAll(".trail-item").forEach(i=>i.classList.remove("selected"));
       item.classList.add("selected"); state.trail=trail.name;
